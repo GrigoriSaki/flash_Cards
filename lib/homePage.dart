@@ -1,11 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flash_cards/utitlities/alertDialog.dart';
 import 'package:flash_cards/utitlities/folderCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  List<String> folerDsc = [
+    "Podstawowe zwroty",
+    "Rodzina",
+    "Wakacje z najlepszym jedzeniami na wakacjach gdzie nie było nic dobrego co"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +30,22 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: addFAB(),
+      floatingActionButton: addFAB(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView.builder(
-          itemCount: 3,
+          itemCount: folerDsc.length,
           itemBuilder: (BuildContext context, int index) {
-            return FolderCard();
+            return FolderCard(
+              fDescrip: folerDsc[index],
+            );
           }),
     );
   }
 
-  Widget addFAB() {
+  Widget addFAB(BuildContext context) {
     return FloatingActionButton.extended(
         backgroundColor: Color(0xff0ec298),
-        onPressed: () {},
+        onPressed: () => showMyAlertDialog(context),
         label: Row(
           children: [
             Icon(
@@ -53,5 +61,20 @@ class HomePage extends StatelessWidget {
             )
           ],
         ));
+  }
+
+  void showMyAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return MyAlertdialog(
+            onCancelF: () {
+              Navigator.pop(context);
+            },
+            onConfirmF: () {
+              Navigator.pop(context);
+            },
+          );
+        });
   }
 }

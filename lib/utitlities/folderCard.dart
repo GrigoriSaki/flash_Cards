@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FolderCard extends StatelessWidget {
-  const FolderCard({super.key});
+  String fDescrip;
+  FolderCard({super.key, required this.fDescrip});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,14 @@ class FolderCard extends StatelessWidget {
             color: Color(0xff91b8af),
             borderRadius: BorderRadius.circular(10)),
         child: Center(
-            child: Text(
-          "Podstawowe zwroty",
-          style: GoogleFonts.inter(fontSize: 24),
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            fDescrip,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.inter(fontSize: 24),
+          ),
         )),
       ),
     );
