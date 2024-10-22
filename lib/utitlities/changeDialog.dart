@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, void_checks
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyAlertdialog extends StatelessWidget {
+class myChangeDialog extends StatelessWidget {
   final textController;
   final onCancelF;
   final onConfirmF;
-  MyAlertdialog(
+  const myChangeDialog(
       {super.key,
       required this.onCancelF,
       required this.onConfirmF,
@@ -21,7 +19,7 @@ class MyAlertdialog extends StatelessWidget {
         child: Container(
           width: 280,
           child: Text(
-            "Utwórz nową talię",
+            "Edytuj swoją talię",
             style: GoogleFonts.inter(fontWeight: FontWeight.w600),
           ),
         ),
@@ -50,9 +48,8 @@ class MyAlertdialog extends StatelessWidget {
                 fontSize: 24,
               ),
               decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Tytuł",
-                  hintStyle: GoogleFonts.inter(fontSize: 20)),
+                border: InputBorder.none,
+              ),
             ),
           ),
         ),
@@ -90,5 +87,6 @@ class MyAlertdialog extends StatelessWidget {
             ))
       ],
     );
+    ;
   }
 }
