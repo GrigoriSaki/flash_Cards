@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_const_constructors_in_immutables, sized_box_for_whitespace
 
 import 'package:flash_cards/utitlities/alertDialog.dart';
 import 'package:flash_cards/utitlities/folderCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'utitlities/changeDialog.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -15,9 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String description = "sadsad";
+  String description = "";
   final folderController = TextEditingController();
-  late final TextEditingController folderController2;
+  late TextEditingController folderController2;
   List<String> folerDsc = [
     "Podstawowe zwroty",
     "Rodzina",
@@ -25,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     folderController2 = TextEditingController(text: description);
   }
@@ -49,19 +46,23 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: addFAB(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListView.builder(
-          itemCount: folerDsc.length,
-          itemBuilder: (BuildContext context, int index) {
-            return FolderCard(
-              deleteFolder: (context) {
-                deleteFunction(index);
-              },
-              insertChange: (context) {
-                showMyChangeDialog(context);
-              },
-              fDescrip: folerDsc[index],
-            );
-          }),
+      body: Container(
+        height: 620,
+        child: ListView.builder(
+            itemCount: folerDsc.length,
+            itemBuilder: (BuildContext context, int index) {
+              return FolderCard(
+                deleteFolder: (context) {
+                  deleteFunction(index);
+                },
+                insertChange: () {
+                  showDesc(index);
+                  showMyChangeDialog(context, index);
+                },
+                fDescrip: folerDsc[index],
+              );
+            }),
+      ),
     );
   }
 
@@ -91,6 +92,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (BuildContext context) {
           return MyAlertdialog(
+            title: "Dodaj nowy folder",
             textController: folderController,
             onCancelF: () {
               Navigator.pop(context);
@@ -112,19 +114,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void showMyChangeDialog(BuildContext context) {
+  void showDesc(index) {
+    setState(() {
+      description = folerDsc[index];
+      folderController2.text = description;
+    });
+  }
+
+  void showMyChangeDialog(BuildContext context, int index) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return myChangeDialog(
-            onCancelF: () {
-              Navigator.pop(context);
-            },
-            onConfirmF: () {
-              Navigator.pop(context);
-            },
-            textController: folderController2,
-          );
+          return MyAlertdialog(
+              title: "Edytuj swój folder",
+              onCancelF: () {
+                Navigator.pop(context);
+              },
+              onConfirmF: () {
+                setState(() {
+                  folerDsc[index] = folderController2.text;
+                });
+                Navigator.pop(context);
+              },
+              textController: folderController2);
         });
   }
 }

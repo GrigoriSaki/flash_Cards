@@ -1,18 +1,20 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, void_checks
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, void_checks, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyAlertdialog extends StatelessWidget {
-  final textController;
+  var textController;
   final onCancelF;
   final onConfirmF;
+  String title;
   MyAlertdialog(
       {super.key,
       required this.onCancelF,
       required this.onConfirmF,
-      required this.textController});
+      required this.textController,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MyAlertdialog extends StatelessWidget {
         child: Container(
           width: 280,
           child: Text(
-            "Utwórz nową talię",
+            title,
             style: GoogleFonts.inter(fontWeight: FontWeight.w600),
           ),
         ),
