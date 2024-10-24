@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_const_constructors_in_immutables, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_const_constructors_in_immutables, sized_box_for_whitespace, body_might_complete_normally_nullable
 
+import 'package:flash_cards/flashCardsPage.dart';
 import 'package:flash_cards/utitlities/alertDialog.dart';
 import 'package:flash_cards/utitlities/folderCard.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,9 @@ class _HomePageState extends State<HomePage> {
             itemCount: folerDsc.length,
             itemBuilder: (BuildContext context, int index) {
               return FolderCard(
+                flashCardPageNav: () {
+                  navigateToFolder(index);
+                },
                 deleteFolder: (context) {
                   deleteFunction(index);
                 },
@@ -138,5 +142,15 @@ class _HomePageState extends State<HomePage> {
               },
               textController: folderController2);
         });
+  }
+
+  void navigateToFolder(index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FLashCardsPage(
+                  folderDesc: folerDsc,
+                  indexList: index,
+                )));
   }
 }

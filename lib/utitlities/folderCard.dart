@@ -1,5 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unused_import
 
+import 'dart:ffi';
+
+import 'package:flash_cards/flashCardsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,9 +11,11 @@ class FolderCard extends StatelessWidget {
   String fDescrip;
   VoidCallback insertChange;
   Function(BuildContext) deleteFolder;
+  VoidCallback flashCardPageNav;
 
   FolderCard(
       {super.key,
+      required this.flashCardPageNav,
       required this.fDescrip,
       required this.deleteFolder,
       required this.insertChange});
@@ -41,6 +46,7 @@ class FolderCard extends StatelessWidget {
         ]),
         child: GestureDetector(
           onDoubleTap: insertChange,
+          onTap: flashCardPageNav,
           child: Container(
             height: 140,
             decoration: BoxDecoration(
