@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flash_cards/homePage.dart';
+import 'package:flash_cards/utitlities/flashCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,6 +21,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF15142e),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -59,9 +61,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
           SliverList(
               delegate:
                   SliverChildBuilderDelegate((BuildContext context, int index) {
-            return ListTile(
-              title: Text("mama"),
-            );
+            return FlashCard();
           }, childCount: 15))
         ],
       ),
