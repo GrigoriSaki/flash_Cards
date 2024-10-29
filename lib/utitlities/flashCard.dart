@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FlashCard extends StatefulWidget {
-  FlashCard({super.key});
+  String frontSideText;
+  String backSideText;
+
+  FlashCard(
+      {super.key, required this.frontSideText, required this.backSideText});
 
   @override
   State<FlashCard> createState() => _FlashCardState();
@@ -48,9 +52,7 @@ class _FlashCardState extends State<FlashCard> {
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      height: 15,
-                    ),
+                    if (isCentered) SizedBox(height: 35),
                     Row(
                       children: [
                         SizedBox(
@@ -62,8 +64,8 @@ class _FlashCardState extends State<FlashCard> {
                           width: 15,
                         ),
                         Text(
+                          widget.frontSideText,
                           maxLines: 2,
-                          "moja pierwsza fiszka",
                           style: GoogleFonts.inter(
                               fontSize: 24, fontWeight: FontWeight.w500),
                         ),
@@ -85,7 +87,7 @@ class _FlashCardState extends State<FlashCard> {
                             width: 15,
                           ),
                           Text(
-                            "my first flashcard",
+                            widget.backSideText,
                             style: GoogleFonts.inter(
                                 fontSize: 24, fontWeight: FontWeight.w500),
                           ),

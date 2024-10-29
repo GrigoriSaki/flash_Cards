@@ -8,6 +8,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FLashCardsPage extends StatefulWidget {
+  List<String> frontSideList = [
+    "Pierwsza Fiszka",
+    "Druga Fiszka",
+    "Pierwsza Fiszka",
+    "Druga Fiszka",
+    "Pierwsza Fiszka",
+    "Druga Fiszka",
+    "Pierwsza Fiszka",
+    "Druga Fiszka",
+  ];
+  List<String> backSideList = [
+    "First Flashcard",
+    "Second FlashCard",
+    "First Flashcard",
+    "Second FlashCard",
+    "First Flashcard",
+    "Second FlashCard",
+    "First Flashcard",
+    "Second FlashCard"
+  ];
   List<String> folderDesc;
   int indexList;
   FLashCardsPage(
@@ -21,10 +41,13 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: addFAB(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Color(0xFF15142e),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            automaticallyImplyLeading: false,
             iconTheme: IconThemeData(color: Color(0xff0ec298)),
             floating: true,
             expandedHeight: 100,
@@ -36,7 +59,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     height: 25,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 35.0),
+                    padding: const EdgeInsets.only(left: 25.0, right: 25),
                     child: Text(
                       "Learn please!",
                       style: GoogleFonts.sixtyfour(
@@ -48,12 +71,15 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                 ],
               ),
               title: Padding(
-                padding: const EdgeInsets.only(top: 35.0, right: 20),
-                child: Text(
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  widget.folderDesc[widget.indexList],
-                  style: GoogleFonts.inter(color: Color(0xff0ec298)),
+                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    widget.folderDesc[widget.indexList],
+                    style: GoogleFonts.inter(color: Color(0xff0ec298)),
+                  ),
                 ),
               ),
             ),
@@ -61,10 +87,36 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
           SliverList(
               delegate:
                   SliverChildBuilderDelegate((BuildContext context, int index) {
-            return FlashCard();
-          }, childCount: 15))
+            return FlashCard(
+              frontSideText: widget.frontSideList[index],
+              backSideText: widget.backSideList[index],
+            );
+          }, childCount: widget.frontSideList.length))
         ],
       ),
     );
+  }
+
+  Widget addFAB(BuildContext context) {
+    return FloatingActionButton.extended(
+        backgroundColor: Color(0xFF15142e).withOpacity(0.3),
+        onPressed: () {},
+        label: Row(
+          children: [
+            Icon(
+              Icons.add,
+              size: 36,
+              color: Color(0xff0ec298),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              "Add",
+              style: GoogleFonts.sixtyfour(
+                  fontWeight: FontWeight.w600, color: Color(0xff0ec298)),
+            )
+          ],
+        ));
   }
 }
