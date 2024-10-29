@@ -44,79 +44,100 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
       floatingActionButton: addFAB(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Color(0xFF15142e),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            iconTheme: IconThemeData(color: Color(0xff0ec298)),
-            floating: true,
-            expandedHeight: 100,
-            backgroundColor: Color(0xFF15142e),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: [
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0, right: 25),
-                    child: Text(
-                      "Learn please!",
-                      style: GoogleFonts.sixtyfour(
-                          backgroundColor: Colors.white.withOpacity(0.2),
-                          color: Colors.white,
-                          fontSize: 22),
+      body: Stack(
+        children: [
+          Container(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  iconTheme: IconThemeData(color: Color(0xff0ec298)),
+                  floating: true,
+                  expandedHeight: 100,
+                  backgroundColor: Color(0xFF15142e),
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Column(
+                      children: [
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25.0, right: 25),
+                          child: Text(
+                            "Learn please!",
+                            style: GoogleFonts.sixtyfour(
+                                backgroundColor: Colors.white.withOpacity(0.2),
+                                color: Colors.white,
+                                fontSize: 22),
+                          ),
+                        ),
+                      ],
+                    ),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          widget.folderDesc[widget.indexList],
+                          style: GoogleFonts.inter(color: Color(0xff0ec298)),
+                        ),
+                      ),
                     ),
                   ),
-                ],
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    widget.folderDesc[widget.indexList],
-                    style: GoogleFonts.inter(color: Color(0xff0ec298)),
-                  ),
                 ),
-              ),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                  return FlashCard(
+                    frontSideText: widget.frontSideList[index],
+                    backSideText: widget.backSideList[index],
+                  );
+                }, childCount: widget.frontSideList.length))
+              ],
             ),
           ),
-          SliverList(
-              delegate:
-                  SliverChildBuilderDelegate((BuildContext context, int index) {
-            return FlashCard(
-              frontSideText: widget.frontSideList[index],
-              backSideText: widget.backSideList[index],
-            );
-          }, childCount: widget.frontSideList.length))
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomAppBar(
+                notchMargin: BorderSide.strokeAlignCenter,
+                height: 65,
+                color: Colors.black.withOpacity(0.5),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.save_as_outlined,
+                            color: Colors.white,
+                          )),
+                    ],
+                  ),
+                )),
+          ),
         ],
       ),
     );
   }
 
   Widget addFAB(BuildContext context) {
-    return FloatingActionButton.extended(
-        backgroundColor: Color(0xFF15142e).withOpacity(0.3),
-        onPressed: () {},
-        label: Row(
-          children: [
-            Icon(
-              Icons.add,
-              size: 36,
-              color: Color(0xff0ec298),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(
-              "Add",
-              style: GoogleFonts.sixtyfour(
-                  fontWeight: FontWeight.w600, color: Color(0xff0ec298)),
-            )
-          ],
-        ));
+    return FloatingActionButton(
+      backgroundColor: Color(0xff0ec298),
+      onPressed: () {},
+      child: Icon(
+        Icons.add,
+        size: 42,
+      ),
+    );
   }
 }
