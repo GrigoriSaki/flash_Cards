@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FlashCard extends StatefulWidget {
@@ -35,12 +36,27 @@ class _FlashCardState extends State<FlashCard> {
           width: double.infinity,
           curve: Curves.fastOutSlowIn,
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withOpacity(0.3),
+                    isSelected
+                        ? Colors.white.withOpacity(0.3)
+                        : Colors.white.withOpacity(0.7),
+                  ]),
               borderRadius: BorderRadius.circular(12)),
           child: Stack(
             children: [
               Positioned(
-                child: Icon(Icons.circle),
+                child: IconButton(
+                    onPressed: () {
+                      return showAlertDialog();
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.circleDot,
+                      size: 32,
+                    )),
                 top: 10,
                 right: 10,
               ),
@@ -59,7 +75,9 @@ class _FlashCardState extends State<FlashCard> {
                           height: 25,
                           width: 10,
                         ),
-                        Icon(Icons.edit),
+                        Icon(
+                          Icons.edit,
+                        ),
                         SizedBox(
                           width: 15,
                         ),
@@ -67,7 +85,9 @@ class _FlashCardState extends State<FlashCard> {
                           widget.frontSideText,
                           maxLines: 2,
                           style: GoogleFonts.inter(
-                              fontSize: 24, fontWeight: FontWeight.w500),
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
                           width: 10,
@@ -82,14 +102,18 @@ class _FlashCardState extends State<FlashCard> {
                           SizedBox(
                             width: 10,
                           ),
-                          Icon(Icons.edit),
+                          Icon(
+                            Icons.edit,
+                          ),
                           SizedBox(
                             width: 15,
                           ),
                           Text(
                             widget.backSideText,
                             style: GoogleFonts.inter(
-                                fontSize: 24, fontWeight: FontWeight.w500),
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w600),
                           ),
                           SizedBox(
                             width: 10,
@@ -105,5 +129,87 @@ class _FlashCardState extends State<FlashCard> {
         ),
       ),
     );
+  }
+
+  void showAlertDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              margin: EdgeInsets.all(25),
+              height: 400,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Wybierz poziom zapamiętania"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            FontAwesomeIcons.circleDot,
+                            size: 32,
+                          )),
+                      Container(
+                        child: Text("Nie wybrano"),
+                        width: 150,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            FontAwesomeIcons.circleDot,
+                            size: 32,
+                          )),
+                      Container(
+                        child: Text("Dobrze"),
+                        width: 150,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            FontAwesomeIcons.circleDot,
+                            size: 32,
+                          )),
+                      Container(
+                        child: Text("Słabo"),
+                        width: 150,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            FontAwesomeIcons.circleDot,
+                            size: 32,
+                          )),
+                      Container(
+                        child: Text("Bardzo słabo"),
+                        width: 150,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

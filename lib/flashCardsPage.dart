@@ -98,19 +98,25 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: BottomAppBar(
-                notchMargin: BorderSide.strokeAlignCenter,
-                height: 65,
-                color: Colors.black.withOpacity(0.5),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Container(
+                height: 55,
+                color: Colors.black.withOpacity(0.4),
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 25.0),
+                  padding: const EdgeInsets.only(left: 25, right: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) {
+                              return HomePage();
+                            }));
+                          },
                           icon: Icon(
                             Icons.arrow_back_ios,
                             color: Colors.white,
@@ -123,8 +129,20 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                           )),
                     ],
                   ),
-                )),
-          ),
+                ),
+              )),
+          Positioned(
+              bottom: 10,
+              right: 162,
+              child: Container(
+                height: 45,
+                width: 69,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15)),
+                    color: Colors.white.withOpacity(0.2)),
+              ))
         ],
       ),
     );
@@ -136,6 +154,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
       onPressed: () {},
       child: Icon(
         Icons.add,
+        color: Color(0xFF15142e),
         size: 42,
       ),
     );
