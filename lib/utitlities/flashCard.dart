@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, must_be_immutable, sized_box_for_whitespace
 
+import 'package:flash_cards/utitlities/colorDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,9 +8,19 @@ import 'package:google_fonts/google_fonts.dart';
 class FlashCard extends StatefulWidget {
   String frontSideText;
   String backSideText;
+  Color dotColor = Color(0xFF15142e);
+  Map<String, Color> choseColor = {
+    "navyBlue": Color(0xFF15142e),
+    "green": Colors.green,
+    "orange": Colors.amber,
+    "red": Colors.red,
+  };
 
-  FlashCard(
-      {super.key, required this.frontSideText, required this.backSideText});
+  FlashCard({
+    super.key,
+    required this.frontSideText,
+    required this.backSideText,
+  });
 
   @override
   State<FlashCard> createState() => _FlashCardState();
@@ -51,11 +62,12 @@ class _FlashCardState extends State<FlashCard> {
               Positioned(
                 child: IconButton(
                     onPressed: () {
-                      return showAlertDialog();
+                      return showAlertDialog(context);
                     },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
                       size: 32,
+                      color: widget.dotColor,
                     )),
                 top: 10,
                 right: 10,
@@ -131,85 +143,17 @@ class _FlashCardState extends State<FlashCard> {
     );
   }
 
-  void showAlertDialog() {
+  void showAlertDialog(context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Dialog(
-            child: Container(
-              margin: EdgeInsets.all(25),
-              height: 400,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Wybierz poziom zapamiętania"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            FontAwesomeIcons.circleDot,
-                            size: 32,
-                          )),
-                      Container(
-                        child: Text("Nie wybrano"),
-                        width: 150,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            FontAwesomeIcons.circleDot,
-                            size: 32,
-                          )),
-                      Container(
-                        child: Text("Dobrze"),
-                        width: 150,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            FontAwesomeIcons.circleDot,
-                            size: 32,
-                          )),
-                      Container(
-                        child: Text("Słabo"),
-                        width: 150,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            FontAwesomeIcons.circleDot,
-                            size: 32,
-                          )),
-                      Container(
-                        child: Text("Bardzo słabo"),
-                        width: 150,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
+          return ColorDialog();
         });
+  }
+
+  void changeDotColor() {
+    setState(() {
+      widget.dotColor = widget.choseColor["red"]!;
+    });
   }
 }

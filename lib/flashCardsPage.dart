@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, must_be_immutable, unused_import, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, must_be_immutable, unused_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'dart:math';
 
 import 'package:flash_cards/homePage.dart';
+import 'package:flash_cards/utitlities/bottomBar.dart';
 import 'package:flash_cards/utitlities/flashCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,22 +12,10 @@ class FLashCardsPage extends StatefulWidget {
   List<String> frontSideList = [
     "Pierwsza Fiszka",
     "Druga Fiszka",
-    "Pierwsza Fiszka",
-    "Druga Fiszka",
-    "Pierwsza Fiszka",
-    "Druga Fiszka",
-    "Pierwsza Fiszka",
-    "Druga Fiszka",
   ];
   List<String> backSideList = [
     "First Flashcard",
     "Second FlashCard",
-    "First Flashcard",
-    "Second FlashCard",
-    "First Flashcard",
-    "Second FlashCard",
-    "First Flashcard",
-    "Second FlashCard"
   ];
   List<String> folderDesc;
   int indexList;
@@ -98,51 +87,8 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               ],
             ),
           ),
-          Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Container(
-                height: 55,
-                color: Colors.black.withOpacity(0.4),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return HomePage();
-                            }));
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                          )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.save_as_outlined,
-                            color: Colors.white,
-                          )),
-                    ],
-                  ),
-                ),
-              )),
-          Positioned(
-              bottom: 10,
-              right: 162,
-              child: Container(
-                height: 45,
-                width: 69,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),
-                    color: Colors.white.withOpacity(0.2)),
-              ))
+          Positioned(bottom: 0, right: 0, left: 0, child: NavBottomBar()),
+          Positioned(bottom: 10, right: 162, child: Notch())
         ],
       ),
     );
