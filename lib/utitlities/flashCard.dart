@@ -8,19 +8,21 @@ import 'package:google_fonts/google_fonts.dart';
 class FlashCard extends StatefulWidget {
   String frontSideText;
   String backSideText;
-  Color dotColor = Color(0xFF15142e);
-  Map<String, Color> choseColor = {
-    "navyBlue": Color(0xFF15142e),
-    "green": Colors.green,
-    "orange": Colors.amber,
-    "red": Colors.red,
-  };
+  Color dotColor;
+  final VoidCallback good_;
+  final VoidCallback notWell_;
+  final VoidCallback veryBad_;
+  final VoidCallback notSelect_;
 
-  FlashCard({
-    super.key,
-    required this.frontSideText,
-    required this.backSideText,
-  });
+  FlashCard(
+      {super.key,
+      required this.good_,
+      required this.frontSideText,
+      required this.backSideText,
+      required this.dotColor,
+      required this.notWell_,
+      required this.veryBad_,
+      required this.notSelect_});
 
   @override
   State<FlashCard> createState() => _FlashCardState();
@@ -147,13 +149,20 @@ class _FlashCardState extends State<FlashCard> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ColorDialog();
+          return ColorDialog(
+            good: () {
+              widget.good_();
+            },
+            notWell: () {
+              widget.notWell_();
+            },
+            veryBad: () {
+              widget.veryBad_();
+            },
+            notSelect: () {
+              widget.notSelect_();
+            },
+          );
         });
-  }
-
-  void changeDotColor() {
-    setState(() {
-      widget.dotColor = widget.choseColor["red"]!;
-    });
   }
 }

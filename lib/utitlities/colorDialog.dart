@@ -1,11 +1,21 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, sort_child_properties_last, unused_import, must_be_immutable, prefer_const_constructors_in_immutables
 
+import 'package:flash_cards/flashCardsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorDialog extends StatelessWidget {
-  const ColorDialog({super.key});
+  ColorDialog(
+      {super.key,
+      required this.good,
+      required this.notWell,
+      required this.veryBad,
+      required this.notSelect});
+  final VoidCallback good;
+  final VoidCallback notWell;
+  final VoidCallback veryBad;
+  final VoidCallback notSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +40,13 @@ class ColorDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      notSelect();
+                    },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
                       size: 40,
+                      color: Color(0xFF15142e),
                     )),
                 Container(
                   child: Text("Nie wybrano",
@@ -47,10 +60,13 @@ class ColorDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      good();
+                    },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
                       size: 40,
+                      color: Colors.green,
                     )),
                 Container(
                   child: Text("Dobrze",
@@ -65,10 +81,13 @@ class ColorDialog extends StatelessWidget {
               children: [
                 IconButton(
                     hoverColor: Colors.black,
-                    onPressed: () {},
+                    onPressed: () {
+                      notWell();
+                    },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
                       size: 40,
+                      color: Colors.amber,
                     )),
                 Container(
                   child: Text("Słabo",
@@ -82,10 +101,13 @@ class ColorDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      veryBad();
+                    },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
                       size: 40,
+                      color: Colors.red,
                     )),
                 Container(
                   child: Text("Bardzo słabo",

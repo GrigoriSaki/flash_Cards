@@ -12,11 +12,14 @@ class FLashCardsPage extends StatefulWidget {
   List<String> frontSideList = [
     "Pierwsza Fiszka",
     "Druga Fiszka",
+    "trzecia Fiszka"
   ];
   List<String> backSideList = [
     "First Flashcard",
     "Second FlashCard",
+    "Third Card"
   ];
+  List<Color> chooseColor = [Colors.green, Colors.red, Colors.white];
   List<String> folderDesc;
   int indexList;
   FLashCardsPage(
@@ -82,6 +85,31 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                   return FlashCard(
                     frontSideText: widget.frontSideList[index],
                     backSideText: widget.backSideList[index],
+                    dotColor: widget.chooseColor[index],
+                    good_: () {
+                      setState(() {
+                        widget.chooseColor[index] = Colors.green;
+                        Navigator.pop(context);
+                      });
+                    },
+                    notWell_: () {
+                      setState(() {
+                        widget.chooseColor[index] = Colors.amber;
+                        Navigator.pop(context);
+                      });
+                    },
+                    veryBad_: () {
+                      setState(() {
+                        widget.chooseColor[index] = Colors.red;
+                        Navigator.pop(context);
+                      });
+                    },
+                    notSelect_: () {
+                      setState(() {
+                        widget.chooseColor[index] = Color(0xFF15142e);
+                        Navigator.pop(context);
+                      });
+                    },
                   );
                 }, childCount: widget.frontSideList.length))
               ],
