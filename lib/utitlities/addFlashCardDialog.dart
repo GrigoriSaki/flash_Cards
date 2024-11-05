@@ -5,12 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddFlashCardDialog extends StatelessWidget {
+  String title;
   TextEditingController myController;
   TextEditingController myController2;
   final onSave;
 
   AddFlashCardDialog({
     super.key,
+    required this.title,
     required this.myController,
     required this.myController2,
     required this.onSave,
@@ -31,7 +33,7 @@ class AddFlashCardDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "Dodaj nową fiszkę",
+                title,
                 style: GoogleFonts.inter(
                     fontWeight: FontWeight.w600, fontSize: 24),
               ),
@@ -46,7 +48,7 @@ class AddFlashCardDialog extends StatelessWidget {
                       fontSize: 22, fontWeight: FontWeight.w500),
                   cursorColor: Colors.black,
                   controller: myController,
-                  maxLength: 75,
+                  maxLength: 55,
                   maxLines: 3,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   decoration: InputDecoration(
@@ -68,7 +70,7 @@ class AddFlashCardDialog extends StatelessWidget {
                 child: TextFormField(
                   style: GoogleFonts.inter(
                       fontSize: 22, fontWeight: FontWeight.w500),
-                  maxLength: 75,
+                  maxLength: 55,
                   maxLines: 3,
                   cursorColor: Colors.black,
                   controller: myController2,

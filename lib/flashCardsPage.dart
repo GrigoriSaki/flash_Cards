@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, must_be_immutable, unused_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flash_cards/homePage.dart';
@@ -86,6 +87,9 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                   return FlashCard(
+                    editFunc: () {
+                      editFlashCard(context, index);
+                    },
                     frontSideText: widget.frontSideList[index],
                     backSideText: widget.backSideList[index],
                     dotColor: widget.chooseColor[index],
@@ -143,11 +147,14 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
     );
   }
 
-  void showAddDialog(BuildContext context) {
+  void showAddDialog(
+    BuildContext context,
+  ) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AddFlashCardDialog(
+            title: "Dodaj nową fiszkę",
             onSave: () {
               setState(() {
                 widget.frontSideList.add(widget.textController.text);
@@ -161,6 +168,29 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
             myController: widget.textController,
             myController2: widget.textController2,
           );
+        });
+  }
+
+  editFlashCard(BuildContext context, int index) {
+    showDialog(
+        context: context,
+        builder: (
+          BuildContext context,
+        ) {
+          return AddFlashCardDialog(
+              title: "Edytuj swoją fiszkę",
+              myController: widget.textController,
+              myController2: widget.textController2,
+              onSave: () {
+                setState(() {
+                  widget.frontSideList[index] = widget.textController.text;
+                  widget.backSideList[index] = widget.textController2.text;
+                  widget.chooseColor[index] = Color(0xFF15142e);
+                  widget.textController.clear();
+                  widget.textController2.clear();
+                  Navigator.pop(context);
+                });
+              });
         });
   }
 }

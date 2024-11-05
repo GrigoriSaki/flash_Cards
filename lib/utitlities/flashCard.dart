@@ -13,9 +13,11 @@ class FlashCard extends StatefulWidget {
   final VoidCallback notWell_;
   final VoidCallback veryBad_;
   final VoidCallback notSelect_;
+  final editFunc;
 
   FlashCard(
       {super.key,
+      required this.editFunc,
       required this.good_,
       required this.frontSideText,
       required this.backSideText,
@@ -68,76 +70,88 @@ class _FlashCardState extends State<FlashCard> {
                     },
                     icon: Icon(
                       FontAwesomeIcons.circleDot,
-                      size: 32,
+                      size: 30,
                       color: widget.dotColor,
                     )),
-                top: 10,
+                top: 5,
                 right: 10,
               ),
-              AnimatedSwitcher(
-                duration: Duration(milliseconds: 400),
-                child: Column(
-                  key: ValueKey(isCentered),
-                  mainAxisAlignment: isCentered
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (isCentered) SizedBox(height: 35),
-                    Row(
-                      children: [
-                        SizedBox(
-                          height: 25,
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.edit,
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Text(
+              Positioned(
+                child: IconButton(
+                    onPressed: () {
+                      widget.editFunc();
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      size: 30,
+                    )),
+                top: 5,
+                right: 55,
+              ),
+              Positioned(
+                top: 45,
+                child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 400),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: 25,
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Container(
+                        width: 325,
+                        child: Text(
                           widget.frontSideText,
-                          maxLines: 2,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                               color: Colors.white.withOpacity(0.8),
                               fontSize: 24,
                               fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(
-                          width: 10,
-                        )
-                      ],
-                    ),
-                    AnimatedOpacity(
-                      duration: Duration(milliseconds: 400),
-                      opacity: (!isSelected) ? 1.0 : 0.0,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            Icons.edit,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            widget.backSideText,
-                            style: GoogleFonts.inter(
-                                color: Colors.black,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          )
-                        ],
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
                 ),
               ),
+              Positioned(
+                bottom: 25,
+                child: AnimatedOpacity(
+                  duration: Duration(milliseconds: 400),
+                  opacity: (!isSelected) ? 1.0 : 0.0,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Container(
+                        width: 325,
+                        child: Text(
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          widget.backSideText,
+                          style: GoogleFonts.inter(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
