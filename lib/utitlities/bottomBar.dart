@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 import '../homePage.dart';
@@ -35,23 +37,6 @@ class NavBottomBar extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Notch extends StatelessWidget {
-  const Notch({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      width: 69,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15)),
-          color: Colors.white.withOpacity(0.2)),
     );
   }
 }

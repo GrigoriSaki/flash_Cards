@@ -3,12 +3,15 @@
 import 'dart:math';
 
 import 'package:flash_cards/homePage.dart';
+import 'package:flash_cards/utitlities/addFlashCardDialog.dart';
 import 'package:flash_cards/utitlities/bottomBar.dart';
 import 'package:flash_cards/utitlities/flashCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FLashCardsPage extends StatefulWidget {
+  final textController = TextEditingController();
+  final textController2 = TextEditingController();
   List<String> frontSideList = [
     "Pierwsza Fiszka",
     "Druga Fiszka",
@@ -19,7 +22,7 @@ class FLashCardsPage extends StatefulWidget {
     "Second FlashCard",
     "Third Card"
   ];
-  List<Color> chooseColor = [Colors.green, Colors.red, Colors.white];
+  List<Color> chooseColor = [Colors.green, Colors.red, Colors.green];
   List<String> folderDesc;
   int indexList;
   FLashCardsPage(
@@ -111,12 +114,16 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                       });
                     },
                   );
-                }, childCount: widget.frontSideList.length))
+                }, childCount: widget.frontSideList.length)),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 240,
+                  ),
+                )
               ],
             ),
           ),
           Positioned(bottom: 0, right: 0, left: 0, child: NavBottomBar()),
-          Positioned(bottom: 10, right: 162, child: Notch())
         ],
       ),
     );
@@ -125,12 +132,35 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   Widget addFAB(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Color(0xff0ec298),
-      onPressed: () {},
+      onPressed: () {
+        showAddDialog(context);
+      },
       child: Icon(
         Icons.add,
         color: Color(0xFF15142e),
         size: 42,
       ),
     );
+  }
+
+  void showAddDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AddFlashCardDialog(
+            onSave: () {
+              setState(() {
+                widget.frontSideList.add(widget.textController.text);
+                widget.backSideList.add(widget.textController2.text);
+                widget.chooseColor.add(Color(0xFF15142e));
+                widget.textController.clear();
+                widget.textController2.clear();
+                Navigator.pop(context);
+              });
+            },
+            myController: widget.textController,
+            myController2: widget.textController2,
+          );
+        });
   }
 }
