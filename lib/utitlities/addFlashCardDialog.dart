@@ -48,7 +48,7 @@ class AddFlashCardDialog extends StatelessWidget {
                       fontSize: 22, fontWeight: FontWeight.w500),
                   cursorColor: Colors.black,
                   controller: myController,
-                  maxLength: 55,
+                  maxLength: 60,
                   maxLines: 3,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   decoration: InputDecoration(
@@ -70,7 +70,7 @@ class AddFlashCardDialog extends StatelessWidget {
                 child: TextFormField(
                   style: GoogleFonts.inter(
                       fontSize: 22, fontWeight: FontWeight.w500),
-                  maxLength: 55,
+                  maxLength: 60,
                   maxLines: 3,
                   cursorColor: Colors.black,
                   controller: myController2,

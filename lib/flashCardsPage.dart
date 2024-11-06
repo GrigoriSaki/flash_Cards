@@ -11,8 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FLashCardsPage extends StatefulWidget {
+  String description = "";
+  String description2 = "";
   final textController = TextEditingController();
   final textController2 = TextEditingController();
+  late TextEditingController controllerFront;
+  late TextEditingController controllerBack;
+
   List<String> frontSideList = [
     "Pierwsza Fiszka",
     "Druga Fiszka",
@@ -34,6 +39,13 @@ class FLashCardsPage extends StatefulWidget {
 }
 
 class _FLashCardsPageState extends State<FLashCardsPage> {
+  @override
+  void initState() {
+    widget.controllerFront = TextEditingController(text: widget.description);
+    widget.controllerBack = TextEditingController(text: widget.description2);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +99,15 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                   return FlashCard(
+                    deleteCard: (conext) {
+                      setState(() {
+                        widget.frontSideList.removeAt(index);
+                        widget.backSideList.removeAt(index);
+                        widget.chooseColor.removeAt(index);
+                      });
+                    },
                     editFunc: () {
+                      showDesc(index);
                       editFlashCard(context, index);
                     },
                     frontSideText: widget.frontSideList[index],
@@ -179,18 +199,27 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
         ) {
           return AddFlashCardDialog(
               title: "Edytuj swoją fiszkę",
-              myController: widget.textController,
-              myController2: widget.textController2,
+              myController: widget.controllerFront,
+              myController2: widget.controllerBack,
               onSave: () {
                 setState(() {
-                  widget.frontSideList[index] = widget.textController.text;
-                  widget.backSideList[index] = widget.textController2.text;
+                  widget.frontSideList[index] = widget.controllerFront.text;
+                  widget.backSideList[index] = widget.controllerBack.text;
                   widget.chooseColor[index] = Color(0xFF15142e);
-                  widget.textController.clear();
-                  widget.textController2.clear();
+
                   Navigator.pop(context);
                 });
               });
         });
+  }
+
+  void showDesc(index) {
+    setState(() {
+      widget.description = widget.frontSideList[index];
+      widget.controllerFront.text = widget.description;
+
+      widget.description2 = widget.backSideList[index];
+      widget.controllerBack.text = widget.description2;
+    });
   }
 }
