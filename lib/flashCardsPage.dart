@@ -18,21 +18,16 @@ class FLashCardsPage extends StatefulWidget {
   late TextEditingController controllerFront;
   late TextEditingController controllerBack;
 
-  List<String> frontSideList = [
-    "Pierwsza Fiszka",
-    "Druga Fiszka",
-    "trzecia Fiszka"
-  ];
-  List<String> backSideList = [
-    "First Flashcard",
-    "Second FlashCard",
-    "Third Card"
-  ];
+  List<String> frontSideList;
+  List<String> backSideList;
   List<Color> chooseColor = [Colors.green, Colors.red, Colors.green];
-  List<String> folderDesc;
-  int indexList;
+  String folderDesc;
+
   FLashCardsPage(
-      {super.key, required this.folderDesc, required this.indexList});
+      {super.key,
+      required this.folderDesc,
+      required this.frontSideList,
+      required this.backSideList});
 
   @override
   State<FLashCardsPage> createState() => _FLashCardsPageState();
@@ -88,7 +83,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                         child: Text(
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          widget.folderDesc[widget.indexList],
+                          widget.folderDesc,
                           style: GoogleFonts.inter(color: Color(0xff0ec298)),
                         ),
                       ),
