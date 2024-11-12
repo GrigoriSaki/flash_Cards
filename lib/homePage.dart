@@ -18,15 +18,19 @@ class _HomePageState extends State<HomePage> {
   final folderController = TextEditingController();
   late TextEditingController folderController2;
   Map<String, List<String>> folerDsc = {
-    "Podstawowe zwroty": ["hej", "siema", "nara"],
-    "Podróże": ["world", "espaniol", "travel"],
-    "Jedzenie na wakacjach": ["food", "awful", "seafood"],
+    "Podstawowe zwroty": [],
+    "Podróże": [],
+    "Jedzenie na wakacjach": [],
   };
+  late Map<String, List<String>> folerDsc2;
+  late Map<String, List<Color>> folerDsc3;
 
   @override
   void initState() {
     super.initState();
     folderController2 = TextEditingController(text: description);
+    folerDsc2 = {for (var key in folerDsc.keys) key: []};
+    folerDsc3 = {for (var key in folerDsc.keys) key: []};
   }
 
   @override
@@ -102,6 +106,7 @@ class _HomePageState extends State<HomePage> {
             textController: folderController,
             onCancelF: () {
               Navigator.pop(context);
+              folderController.clear();
             },
             onConfirmF: () {
               setState(() {
@@ -162,8 +167,9 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(
             builder: (context) => FLashCardsPage(
+                  chooseColor: folerDsc3[key] ?? [],
                   frontSideList: folerDsc[key] ?? [],
-                  backSideList: folerDsc[key] ?? [],
+                  backSideList: folerDsc2[key] ?? [],
                   folderDesc: key,
                 )));
   }

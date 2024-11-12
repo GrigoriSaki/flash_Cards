@@ -20,14 +20,17 @@ class FLashCardsPage extends StatefulWidget {
 
   List<String> frontSideList;
   List<String> backSideList;
-  List<Color> chooseColor = [Colors.green, Colors.red, Colors.green];
+
+  List<Color> chooseColor;
   String folderDesc;
 
-  FLashCardsPage(
-      {super.key,
-      required this.folderDesc,
-      required this.frontSideList,
-      required this.backSideList});
+  FLashCardsPage({
+    super.key,
+    required this.chooseColor,
+    required this.folderDesc,
+    required this.frontSideList,
+    required this.backSideList,
+  });
 
   @override
   State<FLashCardsPage> createState() => _FLashCardsPageState();
@@ -38,6 +41,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   void initState() {
     widget.controllerFront = TextEditingController(text: widget.description);
     widget.controllerBack = TextEditingController(text: widget.description2);
+
     super.initState();
   }
 
