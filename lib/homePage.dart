@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_const_constructors_in_immutables, sized_box_for_whitespace, body_might_complete_normally_nullable
 
 import 'package:flash_cards/flashCardsPage.dart';
+import 'package:flash_cards/hiveData.dart';
 import 'package:flash_cards/utitlities/alertDialog.dart';
 import 'package:flash_cards/utitlities/folderCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -14,23 +16,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var box = Hive.box("myBox");
+  HiveData hv = HiveData();
+
   String description = "";
   final folderController = TextEditingController();
   late TextEditingController folderController2;
-  Map<String, List<String>> folerDsc = {
-    "Podstawowe zwroty": [],
-    "Podróże": [],
-    "Jedzenie na wakacjach": [],
-  };
+
   late Map<String, List<String>> folerDsc2;
   late Map<String, List<Color>> folerDsc3;
 
   @override
   void initState() {
     super.initState();
+    if (box.get("Folder List") == null) {
+      hv.createInitialData();
+    } else {
+      hv.read();
+    }
     folderController2 = TextEditingController(text: description);
-    folerDsc2 = {for (var key in folerDsc.keys) key: []};
-    folerDsc3 = {for (var key in folerDsc.keys) key: []};
+    folerDsc2 = {for (var key in hv.folerDsc.keys) key: []};
+    folerDsc3 = {for (var key in hv.folerDsc.keys) key: []};
   }
 
   @override
@@ -55,9 +61,9 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         height: 620,
         child: ListView.builder(
-            itemCount: folerDsc.length,
+            itemCount: hv.folerDsc.length,
             itemBuilder: (BuildContext context, int index) {
-              String key = folerDsc.keys.elementAt(index);
+              String key = hv.folerDsc.keys.elementAt(index);
               return FolderCard(
                 flashCardPageNav: () {
                   navigateToFolder(index);
@@ -107,10 +113,12 @@ class _HomePageState extends State<HomePage> {
             onCancelF: () {
               Navigator.pop(context);
               folderController.clear();
+              hv.write();
             },
             onConfirmF: () {
               setState(() {
-                folerDsc[folderController.text] = [];
+                hv.folerDsc[folderController.text] = [];
+                hv.write();
 
                 folderController.clear();
               });
@@ -121,14 +129,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void deleteFunction(index) {
-    String key = folerDsc.keys.elementAt(index);
+    String key = hv.folerDsc.keys.elementAt(index);
     setState(() {
-      folerDsc.remove(key);
+      hv.folerDsc.remove(key);
+      hv.write();
     });
   }
 
   void showDesc(index) {
-    String key = folerDsc.keys.elementAt(index);
+    String key = hv.folerDsc.keys.elementAt(index);
     setState(() {
       description = key;
       folderController2.text = description;
@@ -136,7 +145,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showMyChangeDialog(BuildContext context, int index) {
-    String oldKey = folerDsc.keys.elementAt(index);
+    String oldKey = hv.folerDsc.keys.elementAt(index);
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -144,17 +153,19 @@ class _HomePageState extends State<HomePage> {
               title: "Edytuj swój folder",
               onCancelF: () {
                 Navigator.pop(context);
+                hv.write();
               },
               onConfirmF: () {
                 setState(() {
                   String newKey = folderController2.text;
                   if (newKey != oldKey) {
-                    var value = folerDsc[oldKey];
+                    var value = hv.folerDsc[oldKey];
 
-                    folerDsc.remove(oldKey);
-                    folerDsc[newKey] = value!;
+                    hv.folerDsc.remove(oldKey);
+                    hv.folerDsc[newKey] = value!;
                   }
                 });
+
                 Navigator.pop(context);
               },
               textController: folderController2);
@@ -162,13 +173,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigateToFolder(index) {
-    String key = folerDsc.keys.elementAt(index);
+    String key = hv.folerDsc.keys.elementAt(index);
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => FLashCardsPage(
                   chooseColor: folerDsc3[key] ?? [],
-                  frontSideList: folerDsc[key] ?? [],
+                  frontSideList: hv.folerDsc[key] ?? [],
                   backSideList: folerDsc2[key] ?? [],
                   folderDesc: key,
                 )));
