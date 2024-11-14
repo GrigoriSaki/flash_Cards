@@ -23,9 +23,6 @@ class _HomePageState extends State<HomePage> {
   final folderController = TextEditingController();
   late TextEditingController folderController2;
 
-  late Map<String, List<String>> folerDsc2;
-  late Map<String, List<Color>> folerDsc3;
-
   @override
   void initState() {
     super.initState();
@@ -34,9 +31,10 @@ class _HomePageState extends State<HomePage> {
     } else {
       hv.read();
     }
+
     folderController2 = TextEditingController(text: description);
-    folerDsc2 = {for (var key in hv.folerDsc.keys) key: []};
-    folerDsc3 = {for (var key in hv.folerDsc.keys) key: []};
+    hv.folerDsc2 = {for (var key in hv.folerDsc.keys) key: []};
+    hv.folerDsc3 = {for (var key in hv.folerDsc.keys) key: []};
   }
 
   @override
@@ -178,10 +176,11 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(
             builder: (context) => FLashCardsPage(
-                  chooseColor: folerDsc3[key] ?? [],
+                  chooseColor: hv.folerDsc3[key] ?? [],
                   frontSideList: hv.folerDsc[key] ?? [],
-                  backSideList: folerDsc2[key] ?? [],
+                  backSideList: hv.folerDsc2[key] ?? [],
                   folderDesc: key,
+                  myIndex: index,
                 )));
   }
 }
