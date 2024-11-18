@@ -26,15 +26,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     if (box.get("Folder List") == null) {
       hv.createInitialData();
     } else {
       hv.read();
     }
-
     folderController2 = TextEditingController(text: description);
-    hv.folerDsc2 = {for (var key in hv.folerDsc.keys) key: []};
-    hv.folerDsc3 = {for (var key in hv.folerDsc.keys) key: []};
   }
 
   @override
@@ -61,7 +59,6 @@ class _HomePageState extends State<HomePage> {
         child: ListView.builder(
             itemCount: hv.folerDsc.length,
             itemBuilder: (BuildContext context, int index) {
-              String key = hv.folerDsc.keys.elementAt(index);
               return FolderCard(
                 flashCardPageNav: () {
                   navigateToFolder(index);
@@ -73,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                   showDesc(index);
                   showMyChangeDialog(context, index);
                 },
-                fDescrip: key,
+                fDescrip: hv.folerDsc[index],
               );
             }),
       ),
@@ -115,7 +112,7 @@ class _HomePageState extends State<HomePage> {
             },
             onConfirmF: () {
               setState(() {
-                hv.folerDsc[folderController.text] = [];
+                hv.folerDsc.add(folderController.text);
                 hv.write();
 
                 folderController.clear();
@@ -127,23 +124,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   void deleteFunction(index) {
-    String key = hv.folerDsc.keys.elementAt(index);
     setState(() {
-      hv.folerDsc.remove(key);
+      hv.folerDsc.removeAt(index);
       hv.write();
     });
   }
 
   void showDesc(index) {
-    String key = hv.folerDsc.keys.elementAt(index);
     setState(() {
-      description = key;
+      description = hv.folerDsc[index];
       folderController2.text = description;
     });
   }
 
   void showMyChangeDialog(BuildContext context, int index) {
-    String oldKey = hv.folerDsc.keys.elementAt(index);
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -155,13 +149,7 @@ class _HomePageState extends State<HomePage> {
               },
               onConfirmF: () {
                 setState(() {
-                  String newKey = folderController2.text;
-                  if (newKey != oldKey) {
-                    var value = hv.folerDsc[oldKey];
-
-                    hv.folerDsc.remove(oldKey);
-                    hv.folerDsc[newKey] = value!;
-                  }
+                  hv.folerDsc[index] = folderController2.text;
                 });
 
                 Navigator.pop(context);
@@ -171,16 +159,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigateToFolder(index) {
-    String key = hv.folerDsc.keys.elementAt(index);
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => FLashCardsPage(
-                  chooseColor: hv.folerDsc3[key] ?? [],
-                  frontSideList: hv.folerDsc[key] ?? [],
-                  backSideList: hv.folerDsc2[key] ?? [],
-                  folderDesc: key,
-                  myIndex: index,
+                  folderDesc: hv.folerDsc[index],
+                  chooseColor: [],
+                  frontSideList: [],
+                  backSideList: [],
                 )));
   }
 }

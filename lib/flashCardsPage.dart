@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FLashCardsPage extends StatefulWidget {
-  int myIndex;
   String description = "";
   String description2 = "";
   final textController = TextEditingController();
@@ -28,7 +27,6 @@ class FLashCardsPage extends StatefulWidget {
 
   FLashCardsPage({
     super.key,
-    required this.myIndex,
     required this.chooseColor,
     required this.folderDesc,
     required this.frontSideList,
@@ -186,8 +184,6 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                 widget.textController2.clear();
                 Navigator.pop(context);
               });
-              hd.frontSidewrite(widget.myIndex, widget.textController.text,
-                  widget.textController2.text, Color(0xFF15142e));
             },
             myController: widget.textController,
             myController2: widget.textController2,
