@@ -44,6 +44,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   void initState() {
     widget.controllerFront = TextEditingController(text: widget.description);
     widget.controllerBack = TextEditingController(text: widget.description2);
+    hd.read();
 
     super.initState();
   }
@@ -118,24 +119,28 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     good_: () {
                       setState(() {
                         widget.chooseColor[index] = Colors.green;
+                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     notWell_: () {
                       setState(() {
                         widget.chooseColor[index] = Colors.amber;
+                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     veryBad_: () {
                       setState(() {
                         widget.chooseColor[index] = Colors.red;
+                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     notSelect_: () {
                       setState(() {
                         widget.chooseColor[index] = Color(0xFF15142e);
+                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
@@ -182,6 +187,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                 widget.chooseColor.add(Color(0xFF15142e));
                 widget.textController.clear();
                 widget.textController2.clear();
+                hd.writeOnlyCards();
                 Navigator.pop(context);
               });
             },
