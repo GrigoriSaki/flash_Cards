@@ -46,6 +46,7 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
   void initState() {
     widget.controllerFront = TextEditingController(text: widget.description);
     widget.controllerBack = TextEditingController(text: widget.description2);
+
     hd.read();
 
     super.initState();
@@ -119,30 +120,30 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     backSideText: widget.backSideList[index],
                     dotColor: widget.chooseColor[index],
                     good_: () {
+                      hd.flashColor[widget.myKey]![index] = Colors.green;
+                      hd.writeOnlyCards();
                       setState(() {
-                        widget.chooseColor[index] = Colors.green;
-                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     notWell_: () {
+                      widget.chooseColor[index] = Colors.amber;
+                      hd.writeOnlyCards();
                       setState(() {
-                        widget.chooseColor[index] = Colors.amber;
-                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     veryBad_: () {
+                      widget.chooseColor[index] = Colors.red;
+                      hd.writeOnlyCards();
                       setState(() {
-                        widget.chooseColor[index] = Colors.red;
-                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
                     notSelect_: () {
+                      widget.chooseColor[index] = Color(0xFF15142e);
+                      hd.writeOnlyCards();
                       setState(() {
-                        widget.chooseColor[index] = Color(0xFF15142e);
-                        hd.writeOnlyCards();
                         Navigator.pop(context);
                       });
                     },
@@ -183,19 +184,15 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
           return AddFlashCardDialog(
             title: "Dodaj nową fiszkę",
             onSave: () {
+              widget.frontSideList.add(widget.textController.text);
+              widget.backSideList.add(widget.textController2.text);
+              hd.flashColor[widget.myKey]?.add(Color(0xFF15142e));
+              hd.write();
+              widget.textController.clear();
+              widget.textController2.clear();
               setState(() {
-                widget.frontSideList.add(widget.textController.text);
-                widget.backSideList.add(widget.textController2.text);
-                hd.flashColor[widget.myKey]?.add(Color(0xFF15142e));
-                widget.textController.clear();
-                widget.textController2.clear();
-                hd.writeOnlyCards();
-                hd.read();
-
                 Navigator.pop(context);
               });
-
-              hd.checking();
             },
             myController: widget.textController,
             myController2: widget.textController2,
@@ -214,11 +211,11 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               myController: widget.controllerFront,
               myController2: widget.controllerBack,
               onSave: () {
+                widget.frontSideList[index] = widget.controllerFront.text;
+                widget.backSideList[index] = widget.controllerBack.text;
+                widget.chooseColor[index] = Color(0xFF15142e);
+                hd.writeOnlyCards;
                 setState(() {
-                  widget.frontSideList[index] = widget.controllerFront.text;
-                  widget.backSideList[index] = widget.controllerBack.text;
-                  widget.chooseColor[index] = Color(0xFF15142e);
-
                   Navigator.pop(context);
                 });
               });
