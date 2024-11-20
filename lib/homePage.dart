@@ -159,12 +159,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigateToFolder(index) {
-    hv.read();
     String key = hv.folerDsc[index];
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => FLashCardsPage(
+                  myKey: key,
                   folderDesc: hv.folerDsc[index],
                   frontSideList: hv.frontSideTxt[key] ?? [],
                   backSideList: hv.backSideTxt[key] ?? [],

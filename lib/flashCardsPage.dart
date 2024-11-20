@@ -18,6 +18,7 @@ class FLashCardsPage extends StatefulWidget {
   final textController2 = TextEditingController();
   late TextEditingController controllerFront;
   late TextEditingController controllerBack;
+  String myKey;
 
   List<String> frontSideList;
   List<String> backSideList;
@@ -27,6 +28,7 @@ class FLashCardsPage extends StatefulWidget {
 
   FLashCardsPage({
     super.key,
+    required this.myKey,
     required this.chooseColor,
     required this.folderDesc,
     required this.frontSideList,
@@ -184,12 +186,16 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               setState(() {
                 widget.frontSideList.add(widget.textController.text);
                 widget.backSideList.add(widget.textController2.text);
-                widget.chooseColor.add(Color(0xFF15142e));
+                hd.flashColor[widget.myKey]?.add(Color(0xFF15142e));
                 widget.textController.clear();
                 widget.textController2.clear();
                 hd.writeOnlyCards();
+                hd.read();
+
                 Navigator.pop(context);
               });
+
+              hd.checking();
             },
             myController: widget.textController,
             myController2: widget.textController2,

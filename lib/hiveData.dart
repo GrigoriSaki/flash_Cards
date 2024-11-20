@@ -51,4 +51,10 @@ class HiveData {
         MapEntry(key, value.map((color) => color.value).toList()));
     box.put("Color", flashColorAsInt);
   }
+
+  void checking() {
+    print(box.get("FrontSide"));
+    print(backSideTxt);
+    print(flashColor);
+  }
 }
