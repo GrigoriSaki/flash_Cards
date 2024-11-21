@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 class FlashCard extends StatefulWidget {
   String frontSideText;
   String backSideText;
-  Color dotColor;
+  Color? dotColor;
   final VoidCallback good_;
   final VoidCallback notWell_;
   final VoidCallback veryBad_;

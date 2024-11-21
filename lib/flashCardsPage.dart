@@ -23,13 +23,11 @@ class FLashCardsPage extends StatefulWidget {
   List<String> frontSideList;
   List<String> backSideList;
 
-  List<Color> chooseColor;
   String folderDesc;
 
   FLashCardsPage({
     super.key,
     required this.myKey,
-    required this.chooseColor,
     required this.folderDesc,
     required this.frontSideList,
     required this.backSideList,
@@ -109,8 +107,9 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                       setState(() {
                         widget.frontSideList.removeAt(index);
                         widget.backSideList.removeAt(index);
-                        widget.chooseColor.removeAt(index);
+                        hd.flashColor[widget.myKey]?.removeAt(index);
                       });
+                      hd.writeOnlyCards();
                     },
                     editFunc: () {
                       showDesc(index);
@@ -118,30 +117,30 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     },
                     frontSideText: widget.frontSideList[index],
                     backSideText: widget.backSideList[index],
-                    dotColor: widget.chooseColor[index],
+                    dotColor: hd.flashColor[widget.myKey]?[index],
                     good_: () {
-                      hd.flashColor[widget.myKey]![index] = Colors.green;
+                      hd.flashColor[widget.myKey]?[index] = Colors.green;
                       hd.writeOnlyCards();
                       setState(() {
                         Navigator.pop(context);
                       });
                     },
                     notWell_: () {
-                      widget.chooseColor[index] = Colors.amber;
+                      hd.flashColor[widget.myKey]?[index] = Colors.amber;
                       hd.writeOnlyCards();
                       setState(() {
                         Navigator.pop(context);
                       });
                     },
                     veryBad_: () {
-                      widget.chooseColor[index] = Colors.red;
+                      hd.flashColor[widget.myKey]?[index] = Colors.red;
                       hd.writeOnlyCards();
                       setState(() {
                         Navigator.pop(context);
                       });
                     },
                     notSelect_: () {
-                      widget.chooseColor[index] = Color(0xFF15142e);
+                      hd.flashColor[widget.myKey]?[index] = Color(0xFF15142e);
                       hd.writeOnlyCards();
                       setState(() {
                         Navigator.pop(context);
@@ -157,7 +156,13 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               ],
             ),
           ),
-          Positioned(bottom: 0, right: 0, left: 0, child: NavBottomBar()),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: NavBottomBar(
+                myKey: widget.myKey,
+              )),
         ],
       ),
     );
@@ -213,8 +218,8 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               onSave: () {
                 widget.frontSideList[index] = widget.controllerFront.text;
                 widget.backSideList[index] = widget.controllerBack.text;
-                widget.chooseColor[index] = Color(0xFF15142e);
-                hd.writeOnlyCards;
+                hd.flashColor[widget.myKey]?[index] = Color(0xFF15142e);
+                hd.write();
                 setState(() {
                   Navigator.pop(context);
                 });

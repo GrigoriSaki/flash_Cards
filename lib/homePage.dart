@@ -111,13 +111,15 @@ class _HomePageState extends State<HomePage> {
               hv.write();
             },
             onConfirmF: () {
-              setState(() {
-                hv.folerDsc.add(folderController.text);
-                hv.write();
+              hv.folerDsc.add(folderController.text);
+              hv.dynamicCreateMaps();
+              hv.write();
 
-                folderController.clear();
+              folderController.clear();
+              setState(() {
+                Navigator.pop(context);
               });
-              Navigator.pop(context);
+              print(hv.frontSideTxt);
             },
           );
         });
@@ -145,14 +147,13 @@ class _HomePageState extends State<HomePage> {
               title: "Edytuj swój folder",
               onCancelF: () {
                 Navigator.pop(context);
-                hv.write();
               },
               onConfirmF: () {
+                hv.folerDsc[index] = folderController2.text;
+                hv.write;
                 setState(() {
-                  hv.folerDsc[index] = folderController2.text;
+                  Navigator.pop(context);
                 });
-
-                Navigator.pop(context);
               },
               textController: folderController2);
         });
@@ -168,7 +169,6 @@ class _HomePageState extends State<HomePage> {
                   folderDesc: hv.folerDsc[index],
                   frontSideList: hv.frontSideTxt[key] ?? [],
                   backSideList: hv.backSideTxt[key] ?? [],
-                  chooseColor: hv.flashColor[key] ?? [],
                 )));
   }
 }

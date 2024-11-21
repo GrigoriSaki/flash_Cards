@@ -20,6 +20,12 @@ class HiveData {
     write();
   }
 
+  void dynamicCreateMaps() {
+    frontSideTxt = {for (var key in folerDsc) key: []};
+    backSideTxt = {for (var key in folerDsc) key: []};
+    flashColor = {for (var key in folerDsc) key: []};
+  }
+
 //write Folderdata
   void write() {
     box.put("Folder List", folerDsc);
@@ -50,11 +56,5 @@ class HiveData {
     var flashColorAsInt = flashColor.map((key, value) =>
         MapEntry(key, value.map((color) => color.value).toList()));
     box.put("Color", flashColorAsInt);
-  }
-
-  void checking() {
-    print(box.get("FrontSide"));
-    print(backSideTxt);
-    print(flashColor);
   }
 }
