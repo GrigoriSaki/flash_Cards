@@ -19,6 +19,12 @@ class FLashCardsPage extends StatefulWidget {
   late TextEditingController controllerFront;
   late TextEditingController controllerBack;
   String myKey;
+  final colorOrder = {
+    Color(0xFF15142e): 0,
+    Color(0xfff44336): 1,
+    Color(0xffffc107): 2,
+    Color(0xff4caf50): 3
+  };
 
   List<String> frontSideList;
   List<String> backSideList;
@@ -161,7 +167,30 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               right: 0,
               left: 0,
               child: NavBottomBar(
-                myKey: widget.myKey,
+                sortFunc: () {
+                  hd.read;
+                  setState(() {
+                    final colors = hd.flashColor[widget.myKey]!;
+                    final frontTxt = hd.frontSideTxt[widget.myKey]!;
+
+                    final indices = List<int>.generate(colors.length, (i) => i);
+
+                    indices.sort((a, b) {
+                      final priorityA = widget.colorOrder[colors[a]] ?? 999;
+                      final priorityB = widget.colorOrder[colors[b]] ?? 999;
+                      return priorityA.compareTo(priorityB);
+                    });
+                    hd.flashColor[widget.myKey] = [
+                      for (var i in indices) colors[i]
+                    ];
+
+                    hd.frontSideTxt[widget.myKey] = [
+                      for (var i in indices) frontTxt[i]
+                    ];
+                  });
+
+                  print(hd.frontSideTxt);
+                },
               )),
         ],
       ),
