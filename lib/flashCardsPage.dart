@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, must_be_immutable, unused_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, must_be_immutable, unused_import, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, avoid_print
 
 import 'dart:ffi';
 import 'dart:math';
@@ -171,7 +171,6 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                   hd.read;
                   setState(() {
                     final colors = hd.flashColor[widget.myKey]!;
-                    final frontTxt = hd.frontSideTxt[widget.myKey]!;
 
                     final indices = List<int>.generate(colors.length, (i) => i);
 
@@ -180,16 +179,22 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                       final priorityB = widget.colorOrder[colors[b]] ?? 999;
                       return priorityA.compareTo(priorityB);
                     });
+
+                    hd.frontSideTxt[widget.myKey] = [
+                      for (var i in indices) hd.frontSideTxt[widget.myKey]![i]
+                    ];
+                    hd.backSideTxt[widget.myKey] = [
+                      for (var i in indices) hd.backSideTxt[widget.myKey]![i]
+                    ];
+
                     hd.flashColor[widget.myKey] = [
                       for (var i in indices) colors[i]
                     ];
 
-                    hd.frontSideTxt[widget.myKey] = [
-                      for (var i in indices) frontTxt[i]
-                    ];
+                    widget.frontSideList = hd.frontSideTxt[widget.myKey]!;
+                    widget.backSideList = hd.backSideTxt[widget.myKey]!;
+                    hd.write();
                   });
-
-                  print(hd.frontSideTxt);
                 },
               )),
         ],
