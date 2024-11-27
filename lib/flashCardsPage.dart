@@ -168,7 +168,11 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               left: 0,
               child: NavBottomBar(
                 sortFunc: () {
-                  hd.read;
+                  print(
+                      "Before read: ${hd.frontSideTxt} ------ colors: ${hd.flashColor}");
+                  hd.read();
+                  print(
+                      "AFTER read: ${hd.frontSideTxt} ------ colors: ${hd.flashColor}");
                   setState(() {
                     final colors = hd.flashColor[widget.myKey]!;
 
@@ -195,6 +199,8 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
                     widget.backSideList = hd.backSideTxt[widget.myKey]!;
                     hd.write();
                   });
+                  print(
+                      "AFTER WRITE: ${hd.frontSideTxt} ------ colors: ${hd.flashColor}");
                 },
               )),
         ],
@@ -223,8 +229,8 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
           return AddFlashCardDialog(
             title: "Dodaj nową fiszkę",
             onSave: () {
-              widget.frontSideList.add(widget.textController.text);
-              widget.backSideList.add(widget.textController2.text);
+              hd.frontSideTxt[widget.myKey]?.add(widget.textController.text);
+              hd.backSideTxt[widget.myKey]?.add(widget.textController2.text);
               hd.flashColor[widget.myKey]?.add(Color(0xFF15142e));
               hd.write();
               widget.textController.clear();
@@ -250,8 +256,10 @@ class _FLashCardsPageState extends State<FLashCardsPage> {
               myController: widget.controllerFront,
               myController2: widget.controllerBack,
               onSave: () {
-                widget.frontSideList[index] = widget.controllerFront.text;
-                widget.backSideList[index] = widget.controllerBack.text;
+                hd.frontSideTxt[widget.myKey]?[index] =
+                    widget.controllerFront.text;
+                hd.backSideTxt[widget.myKey]?[index] =
+                    widget.controllerBack.text;
                 hd.flashColor[widget.myKey]?[index] = Color(0xFF15142e);
                 hd.write();
                 setState(() {

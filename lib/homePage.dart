@@ -111,8 +111,12 @@ class _HomePageState extends State<HomePage> {
               hv.write();
             },
             onConfirmF: () {
+              print("before: ${hv.frontSideTxt}");
+
               hv.folerDsc.add(folderController.text);
+              print("Afteer: ${hv.frontSideTxt}");
               hv.dynamicCreateMaps();
+              print("BEFORE BEFORE: ${hv.frontSideTxt}");
               hv.write();
 
               folderController.clear();
@@ -149,9 +153,16 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
               },
               onConfirmF: () {
-                hv.folerDsc[index] = folderController2.text;
-                hv.write;
                 setState(() {
+                  var front = hv.frontSideTxt[hv.folerDsc[index]];
+                  var back = hv.backSideTxt[hv.folerDsc[index]];
+                  var color = hv.flashColor[hv.folerDsc[index]];
+
+                  hv.folerDsc[index] = folderController2.text;
+                  hv.frontSideTxt[folderController2.text] = front!;
+                  hv.backSideTxt[folderController2.text] = back!;
+                  hv.flashColor[folderController2.text] = color!;
+                  hv.write;
                   Navigator.pop(context);
                 });
               },

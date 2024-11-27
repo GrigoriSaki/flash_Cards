@@ -21,9 +21,12 @@ class HiveData {
   }
 
   void dynamicCreateMaps() {
-    frontSideTxt = {for (var key in folerDsc) key: []};
-    backSideTxt = {for (var key in folerDsc) key: []};
-    flashColor = {for (var key in folerDsc) key: []};
+    for (var key in folerDsc) {
+      frontSideTxt.putIfAbsent(key, () => []);
+
+      backSideTxt.putIfAbsent(key, () => []);
+      flashColor.putIfAbsent(key, () => []);
+    }
   }
 
 //write Folderdata
